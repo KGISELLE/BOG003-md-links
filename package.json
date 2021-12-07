@@ -15,8 +15,8 @@
     "type": "git",
     "url": "git+https://github.com/KGISELLE/BOG003-md-links.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["node.js", "markdown", "markdown-link-extractor", "library"],
+  "author": "Giselle Bernal",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/KGISELLE/BOG003-md-links/issues"
