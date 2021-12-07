@@ -30,7 +30,7 @@ const validateFile = () => {
   });
 };
 
-// validateFile();
+validateFile();
 
 // ! Obteniendo la extension del archivo
 const fileExtension = path.extname(inputPath);
@@ -110,7 +110,6 @@ getLinks(); */
 //   validateFile(inputPath)
 //   .then
 // };
-
 
 readMarkdown(inputPath)
   .then(console.log('*** 5. 😁 Leyendo archivo tipo MARKDOWN', readingFile(inputPath)))

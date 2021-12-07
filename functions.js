@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 // ! Guardar el input (ruta ingresada por el usuario) en una variable
-const inputPath = './input-readme/prueba3-readme.md';
+const inputPath = './input-readme/prueba.txt';
 console.log(`***1. Ruta Ingresada por el usuario: ${inputPath} ***`);
 
 // ? Convertir ruta relativa a absoluta para mostrar al usuario
@@ -31,9 +31,9 @@ const readingFile = (inputPath1) => {
   return promiseReading;
 };
 
-readingFile(inputPath)
-  .then((data) => console.log('*** 4. 😁 Leyendo archivo', data))
-  .catch((error) => console.error(error, '*** 4. 😓 Error al leer el archivo'));
+// readingFile(inputPath)
+//   .then((data) => console.log('*** 4. 😁 Leyendo archivo', data))
+//   .catch((error) => console.error(error, '*** 4. 😓 Error al leer el archivo'));
 
 // ! Función para solamente leer archivos con extension .md (FUNCTION)
 const readMarkdown = (error, fileMarkdown) => {
@@ -48,7 +48,8 @@ const readMarkdown = (error, fileMarkdown) => {
 };
 
 readMarkdown(inputPath)
-  .then(console.log('*** 5. 😁 Leyendo archivo tipo MARKDOWN', readingFile(inputPath)))
+  .then(() => readingFile(inputPath))
+  .then((data) => console.log(data))
   .catch((error) => console.error(error, '*** 5.😓 No es un archivo tipo MARKDOWN'));
 
 // ! Función para extraer links de data leeida en funcion readingFile
