@@ -4,10 +4,10 @@ const path = require('path');
 
 // Requerir el modulo de File System de Node.js, este devuelve un objeto.
 const fs = require('fs');
+// const { resolve } = require('path');
 
-// ! Funcion principal mdLinks que retornara una promesa
-// const mdLinks = () => {
-// };
+// Requerir libreria para obtener links de mardown
+// const md = require('markdown-it')();
 
 // ! Guardar el input (ruta ingresada por el usuario) en una variable
 const inputPath = './input-readme/prueba1-readme.md';
@@ -30,86 +30,88 @@ const validateFile = () => {
   });
 };
 
-validateFile();
+// validateFile();
 
 // ! Obteniendo la extension del archivo
 const fileExtension = path.extname(inputPath);
 console.log(`*** 5. La extension del archivo es: ${fileExtension}`);
 
 // ! Leer el archivo (FUNCTION)
-const readingFile = () => {
-  fs.readFile(inputPath, 'utf8', (err) => {
-    if (err) {
-      console.error('*** 6.ERROR AL LEER EL ARCHIVO ***', err);
-    } else {
-      console.log('*** 6. LECTURA DEL ARCHIVO ***');
-      // console.log(data);
-    }
+const readingFile = (inputPath1) => {
+  const promiseReading = new Promise((res, reject) => {
+    fs.readFile(inputPath1, 'utf8', (err, data) => {
+      if (err) {
+        reject(err);
+        console.error('*** 6.ERROR AL LEER EL ARCHIVO ***', err);
+      } else {
+        // console.log('*** 6. LECTURA DEL ARCHIVO ***');
+        // console.log(data);
+        res(data);
+      }
+    });
   });
+  return promiseReading;
 };
 
+readingFile(inputPath)
+  .then((data) => console.log(data))
+  .catch(console.log('😁este archivo no es puede leer'));
+
 // ! Función para solamente leer archivos con extension .md (FUNCTION)
-const readMackdown = () => {
+const readMarkdown = () => {
   if (fileExtension === '.md') {
     readingFile();
+    console.log('*** 6. Leyendo archivo tipo MARKDOWN***');
   } else {
     console.log('*** 6. No es un archivo tipo MARKDOWN***');
   }
 };
 
-readMackdown();
+// readMarkdown();
 
-//Función para extraer links de dataFile entregado por readFile y además se filtran. Esta función es síncrona porque ya recibe el texto plano (no lo busca)
-const getLinks = (dataFile, filePath) => markdownLinkExtractor(dataFile, true)
-  .filter(objectDetail => (((objectDetail.href).includes('#') == true) && ((objectDetail.href).includes('http' || 'https')) == true) ||
-  ((objectDetail.href).includes('#') == false) && ((objectDetail.href)
-  .includes('http' || 'https')))
-  .map(objectDetail => ({
-    href: objectDetail.href,
-    text: objectDetail.text,
-    file: filePath,
-  })) 
-// Esta función es una promesa que valida la ruta y si es archivo
-/* const validFile = (inputPath) => new Promise((resolve, reject) => {
-  fs.stat(inputPath, (error, stats) => {
-    if (stats) {
-      resolve(stats.isFile());
-    } else {
-      reject(error, 'Ruta inválida');
-    }
-  });
-});
+// ! Función para extraer links del archivo .md
 
-console.log(validFile); */
+// const { readFileSync } = require('fs');
+// const markdownLinkExtractor = require('markdown-link-extractor');
 
-// fs.readdir('./input-readme', (err, files) => {
-//   if (err) {
-//     // throw err;
-//     console.error('****RUTA INVALIDA****', err);
-//   } else {
-//     console.log('****LECTURA DEL DIRECTORIO****');
-//     console.log(files);
-//   }
-// });
+// const markdown = readFileSync(inputPath, { encoding: 'utf8' });
 
-// fs.readFile('./input-readme/prueba1-readme.md', 'utf8', (err, data) => {
-//   if (err) {
-//     console.error('****ARCHIVO INVALIDO, DEBE SER UN ARCHIVO TIPO MARKDOWN****', err);
-//   // return
-//   } else {
-//     console.log('****LECTURA DEL ARCHIVO****');
-//     // console.log(data);
-//   }
-// });
+// const links = markdownLinkExtractor(markdown, false);
+// links.forEach((link) => console.log(link));
 
-// fs.readFile('.', 'utf8' , (err, data) => {
-//   if (err) {
-//     console.error(err)
-//     return
-//   }
-//   console.log(data)
-// })
+// const details = markdownLinkExtractor(markdown, true);
+// details.forEach((detail) => console.log(detail));
 
-// module.exports = () => {
-//   // ...
+/* const getLinks = (err) => {
+  if (err) {
+    console.log('*** 7. No es un archivo tipo MARKDOWN***');
+  } else {
+    const details = markdownLinkExtractor(readMarkdown(inputPath), false);
+    details.forEach((detail) => console.log(detail));
+    console.log('HOLA ENTRE');
+  }
+};
+
+getLinks(); */
+
+// ! Función para extraer links del archivo leido en la funcion readMarkdown
+// const getLinks = md.parse(readMarkdown, {});
+
+// console.log(getLinks);
+
+// const markdownLinkExtractor = require('markdown-link-extractor');
+
+// const details = markdownLinkExtractor(readingFile, true);
+// details.forEach((detail) => console.log(detail));
+
+// ! Funcion principal mdLinks que retornara una promesa
+// const mdLinks = (inputPath, options) =>
+// new Promise ((resolve, reject) => {
+//   validateFile(inputPath)
+//   .then
 // };
+
+
+readMarkdown(inputPath)
+  .then(console.log('*** 5. 😁 Leyendo archivo tipo MARKDOWN', readingFile(inputPath)))
+  .catch((error) => console.error(error, '*** 5.😓 No es un archivo tipo MARKDOWN'));
