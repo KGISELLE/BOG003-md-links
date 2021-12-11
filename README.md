@@ -51,7 +51,7 @@ Para realizar este diagrama de flujo se utilizó la herramienta **LucidChart**.
 
 
 4. Se realizó planning adicional mediante la herramienta [Github Projects](https://github.com/KGISELLE/BOG003-md-links/projects/1) que por medio de issues y milestones se organiza y planifica tareas y objetivos concretos del proyecto.
-<br>
+
 Se tomaron en consideración para realizar esta planeación los entregables del proyecto, el Checklist y los pasos definidos en el diagrama de flujo.
 
 5. En paralelo a las actividades mencionadas, se priorizó el estudio [node.js](https://nodejs.org/en/docs/guides/) para estructurar mejor las actividades anteriores.
