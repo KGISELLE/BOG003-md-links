@@ -1,6 +1,6 @@
 // ! Guardar el input (ruta ingresada por el usuario) en una variable
 // const inputPath = './input-readme';
-const inputPath = './input-readme/prueba1-readme.md';
+// const inputPath = './input-readme/prueba3-readme.md';
 
 const fs = require('fs');
 
@@ -14,12 +14,19 @@ const { JSDOM } = jsdom;
 
 // ! Funcion para validar que la ruta sea correcta y que sea un archivo
 const asFile = (inputPath0) => {
+  const absolutePath = path.resolve(inputPath0);
+  console.log(`*** 1. La ruta absoluta es: ${absolutePath}`);
   const validateFile = new Promise((resolve, reject) => {
     fs.stat(inputPath0, (error, stats) => {
       if (error) {
         reject(error);
+        console.log('❌ La ruta ingresada no existe');
+      } else if (stats.isFile() === false) {
+        reject(error);
+        console.log('🤔 La ruta ingresada es un directorio ');
       } else {
         resolve(stats.isFile());
+        console.log('*** 2. La ruta ingresada es un archivo');
       }
     });
   });
@@ -41,6 +48,7 @@ const isMarkdown = (inputPath2, error) => {
       resolve(true);
     } else {
       reject(error);
+      console.log('😥 EL archivo no es de tipo markdown');
     }
   });
   return promiseFileMd;
@@ -70,43 +78,47 @@ const readingFile = (inputPath1) => {
 
 // ! Función para extraer links de data leeida de archivo tipo markdown
 const getLinks = (data) => {
-  // Crear array vacio para guardar los links
   const arrayLinks = [];
 
-  // Funcion renderizar(HTML)libreria marked.
+  // Funcion renderizar(HTML)libreria marked - convirtiendo a archivo html.
   const dataHtml = marked.parse(data);
-  console.log(dataHtml);
 
   const dom = new JSDOM(dataHtml);
 
   const aTags = dom.window.document.getElementsByTagName('a');
 
-  const links = aTags[0].getAttribute('href');
-  console.log('Extrayendo el link', links);
+  const aTagsArray = [...aTags];
 
-  arrayLinks.push(links);
+  aTagsArray.forEach((elem) => {
+    console.log(`${elem}`);
+    arrayLinks.push(`href: ${elem}`);
+  });
+
   console.log(arrayLinks);
-
-  // console.log('mostar arrayLink', arrayLinks);
 };
 
-getLinks('[Markdown](https://es.wikipedia.org/wiki/Markdown)');
-
-// ! Encadenando promesas
+/* // ! Encadenando promesas
 asFile(inputPath)
-  .then((res) => {
-    console.log('*** 1. Es un archivo', res);
-    return inputPath;
-  })
+  .then(() => inputPath)
   .then((res) => isMarkdown(res))
   .then((res) => {
-    console.log('*** 2. Es un archivo tipo Markdown', res);
+    console.log('*** 3. Es un archivo tipo Markdown', res);
     return inputPath;
   })
   .then((res) => readingFile(res))
   .then((res) => {
-    console.log('*** 3. Leyendo el archivo');
+    console.log('*** 4. Leyendo el archivo');
     return res;
   })
-  // .then((res) => console.log('Es un archivo es de tipo', res))
-  .catch(() => console.log('Error Proceso Terminado'));
+  .then((res) => {
+    console.log('*** 5. Extrayendo Links');
+    getLinks(res);
+  })
+  .catch(() => console.log('Error Proceso Terminado')); */
+
+module.exports = {
+  asFile,
+  isMarkdown,
+  readingFile,
+  getLinks,
+};
