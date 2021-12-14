@@ -2,15 +2,18 @@
 // const inputPath = './input-readme';
 // const inputPath = './input-readme/prueba3-readme.md';
 
+// LLamado a metodos de nodeJS
 const fs = require('fs');
-
 const path = require('path');
 
+// Llamado a librerias
 const marked = require('marked');
-
 const jsdom = require('jsdom');
 
 const { JSDOM } = jsdom;
+
+// Libreria para hacer peticiones HTTP
+const fetch = require('node-fetch');
 
 // ! Funcion para validar que la ruta sea correcta y que sea un archivo
 const asFile = (inputPath0) => {
@@ -25,7 +28,7 @@ const asFile = (inputPath0) => {
         reject(error);
         console.log('🤔 La ruta ingresada es un directorio ');
       } else {
-        resolve(stats.isFile());
+        resolve(stats.isFile() === true);
         console.log('*** 2. La ruta ingresada es un archivo');
       }
     });
@@ -89,36 +92,55 @@ const getLinks = (data) => {
 
   const aTagsArray = [...aTags];
 
-  aTagsArray.forEach((elem) => {
-    console.log(`${elem}`);
-    arrayLinks.push(`href: ${elem}`);
-  });
+  aTagsArray.forEach((elem) => arrayLinks.push(`${elem}`));
 
   console.log(arrayLinks);
+
+  if (arrayLinks.length === 0) {
+    console.log('Ups, no hemos encontrado ningún enlace');
+  }
+
+  return arrayLinks;
 };
 
-/* // ! Encadenando promesas
-asFile(inputPath)
-  .then(() => inputPath)
-  .then((res) => isMarkdown(res))
-  .then((res) => {
-    console.log('*** 3. Es un archivo tipo Markdown', res);
-    return inputPath;
-  })
-  .then((res) => readingFile(res))
-  .then((res) => {
-    console.log('*** 4. Leyendo el archivo');
-    return res;
-  })
-  .then((res) => {
-    console.log('*** 5. Extrayendo Links');
-    getLinks(res);
-  })
-  .catch(() => console.log('Error Proceso Terminado')); */
+// ! Funcion para validar los links
+const validateLinks = (arrayL) => {
+  console.log('*** 6. Validando link');
+  arrayL.map((link) => fetch(link)
+    .then((res) => {
+      if (res.status >= 200 && res.status < 400) {
+        console.log('😉 Link OK');
+        console.log('URL =', res.url);
+        console.log('Status HTTP =', res.status);
+        console.log('Mensaje Status =', res.statusText);
+        console.log('');
+      } else {
+        console.log('❌ Link Fail');
+        console.log('URL =', res.url);
+        console.log('Status HTTP =', res.status);
+        console.log('Mensaje Status =', res.statusText);
+        console.log('');
+      }
+    })
+    .catch((err) => console.error(err, '😪 Link Roto')));
+};
+
+validateLinks([
+  'https://es.wikipedia.org/wiki/Markdown',
+  'https://nodejs.org/',
+  'https://nodejs.org/es/',
+  'https://developers.google.com/v8/',
+  'https://httpbin.org/post']);
 
 module.exports = {
   asFile,
   isMarkdown,
   readingFile,
   getLinks,
+  validateLinks,
 };
+
+
+
+// // validateLinks('https://github.com/github/fetch');
+// validateLinks(['https://github.com/github/fetch', 'https://httpbin.org/post']);

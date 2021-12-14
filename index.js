@@ -1,7 +1,7 @@
 const functions = require('./functions');
 
 // ! Funcion principal mdLinks que retornara una promesa
-const mdLinks = (inputPath, error) => {
+const mdLinks = (inputPath, option, error) => {
   const promiseMD = new Promise((resolve, reject) => {
     if (error) {
       reject(error);
@@ -22,6 +22,10 @@ const mdLinks = (inputPath, error) => {
           console.log('*** 5. Extrayendo Links');
           functions.getLinks(res);
         })
+        // .then((res) => {
+        //   console.log('*** 6. validando Links', res);
+        //   functions.validateLinks(res);
+        // })
         .catch(() => console.log('Proceso Terminado'));
       resolve(resMD);
     }
