@@ -140,7 +140,5 @@ module.exports = {
   validateLinks,
 };
 
-
-
 // // validateLinks('https://github.com/github/fetch');
 // validateLinks(['https://github.com/github/fetch', 'https://httpbin.org/post']);

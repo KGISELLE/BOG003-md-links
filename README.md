@@ -14,27 +14,12 @@
 
 ## 1. Resumen del proyecto
 
-[Node.js](https://nodejs.org/es/) es un entorno de ejecución para JavaScript
-construido con el [motor de JavaScript V8 de Chrome](https://developers.google.com/v8/).
-Esto nos va a permitir ejecutar JavaScript en el entorno del sistema operativo,
-ya sea tu máquina o un servidor, lo cual nos abre las puertas para poder
-interactuar con el sistema en sí, archivos, redes, ...
+El presente proyecto se desarrolló como parte del proceso de aprendizaje del bootcamp de Laboratoria en el cual las estudiantes desarrollan habilidad claves para trabajar como desarrolladoras front-end.
 
-En este proyecto nos alejamos un poco del navegador para construir un programa
-que se ejecute usando Node.js, donde aprenderemos sobre cómo interactuar con el
-sistema archivos, con el entorno (_proceso_, _env_, _stdin/stdout/stderr_), ...
-
-En este proyecto crearás una herramienta de línea de comando (CLI) así como tu
-propia librería (o biblioteca - library) en JavaScript.
-
-Diseñar tu propia librería es una experiencia fundamental para cualquier
-desarrollador porque que te obliga a pensar en la interfaz (API) de tus
-_módulos_ y cómo será usado por otros developers. Debes tener especial
-consideración en peculiaridades del lenguaje, convenciones y buenas prácticas.
 
 ## 2. Definición del producto (Product Definition)
 
-Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en tu proyecto. Piensa en eso al decidir tu estrategia de trabajo.
+El producto entregable es una herramienta de línea de comando (CLI) así como una librería propia usando Node.js, que lee y analice archivos en formato Markdown, para verificar los links que contengan y reportar los estados de las url's de estos links.
 
 ## 3. Plan de acción
 
@@ -69,5 +54,19 @@ En esta etapa se realizó las configuraciones iniciales del proyecto
 4. Se crearon los archivos readme de prueba con extension .md de los cuales uno tiene todos los links perfectos ***prueba1-readme.md*** y el otro tiene algunos links rotos ***prueba2-readme.md*** y existe un tercer archivo ***diagrama-flujo.png*** con extensión .png para poder validar que se lean los archivos con extension .md.
 
 ### Etapa de Desarrollo
+
+Se modularizo el codigo utilizando el sistema de módulos CommonJS de nodeJS.
+
+Se dividio el código en los siguientes archivos y carpetas:
+* 🗂️ input-readme = Carpeta que contiene archivos con extension .md, .txt y .png, esto para realizar las pruebas de la funcionalidad del proyecto.
+  * 📝 diagrama-flujo.png
+  * 📝 prueba.txt
+  * 📝 prueba1-readme.md
+  * 📝 prueba2-readme.md
+  * 📝 prueba3-readme.md
+
+* 📝 functions.js = Archivo donde se crea el código para las funciones que se utilizarán en el archivo index.js que contiene la funcion mdLinks.
+* 📝 Index.js = Archivo principal que contiene la funcion mdLinks, la cual se compone de la invocación de las funciones-promesas creadas en el archivo functions.js.
+* 📝 cli.js = Archivo en el cual se ejecutará la libreria por parte del usuario, en este archivo se llama a la funcion mdLinks para ejecutar las validaciones de los Links según la ruta ingresada por el usuario.
 
 
